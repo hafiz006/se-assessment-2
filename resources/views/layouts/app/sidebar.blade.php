@@ -11,22 +11,44 @@
             </flux:sidebar.header>
 
             <flux:sidebar.nav>
-                <flux:sidebar.group :heading="__('Platform')" class="grid">
-                    <flux:sidebar.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>
-                        {{ __('Dashboard') }}
-                    </flux:sidebar.item>
-                </flux:sidebar.group>
+                @if (auth()->user()?->isAdmin())
+                    <flux:sidebar.group :heading="__('Admin')" class="grid">
+                        <flux:sidebar.item icon="chart-bar" :href="route('admin.dashboard')" :current="request()->routeIs('admin.dashboard')" wire:navigate>
+                            {{ __('Dashboard') }}
+                        </flux:sidebar.item>
+                        <flux:sidebar.item icon="users" :href="route('admin.accounts.index')" :current="request()->routeIs('admin.accounts.*')" wire:navigate>
+                            {{ __('Accounts') }}
+                        </flux:sidebar.item>
+                        <flux:sidebar.item icon="inbox-arrow-down" :href="route('admin.deposits.index')" :current="request()->routeIs('admin.deposits.*')" wire:navigate>
+                            {{ __('Deposits') }}
+                        </flux:sidebar.item>
+                        <flux:sidebar.item icon="arrow-up-tray" :href="route('admin.withdrawals.index')" :current="request()->routeIs('admin.withdrawals.*')" wire:navigate>
+                            {{ __('Withdrawals') }}
+                        </flux:sidebar.item>
+                        <flux:sidebar.item icon="currency-dollar" :href="route('admin.prices.index')" :current="request()->routeIs('admin.prices.*')" wire:navigate>
+                            {{ __('Metal Prices') }}
+                        </flux:sidebar.item>
+                    </flux:sidebar.group>
+                @else
+                    <flux:sidebar.group :heading="__('My Account')" class="grid">
+                        <flux:sidebar.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>
+                            {{ __('Dashboard') }}
+                        </flux:sidebar.item>
+                        <flux:sidebar.item icon="inbox-arrow-down" :href="route('deposits.index')" :current="request()->routeIs('deposits.*')" wire:navigate>
+                            {{ __('Deposits') }}
+                        </flux:sidebar.item>
+                        <flux:sidebar.item icon="arrow-up-tray" :href="route('withdrawals.index')" :current="request()->routeIs('withdrawals.*')" wire:navigate>
+                            {{ __('Withdrawals') }}
+                        </flux:sidebar.item>
+                    </flux:sidebar.group>
+                @endif
             </flux:sidebar.nav>
 
             <flux:spacer />
 
             <flux:sidebar.nav>
-                <flux:sidebar.item icon="folder-git-2" href="https://github.com/laravel/livewire-starter-kit" target="_blank">
-                    {{ __('Repository') }}
-                </flux:sidebar.item>
-
-                <flux:sidebar.item icon="book-open-text" href="https://laravel.com/docs/starter-kits#livewire" target="_blank">
-                    {{ __('Documentation') }}
+                <flux:sidebar.item icon="cog-6-tooth" :href="route('profile.edit')" :current="request()->routeIs('profile.*')" wire:navigate>
+                    {{ __('Settings') }}
                 </flux:sidebar.item>
             </flux:sidebar.nav>
 

@@ -15,7 +15,7 @@
 
     <form wire:submit="save" class="space-y-5">
         <flux:field>
-            <flux:label>Account <flux:required /></flux:label>
+            <flux:label>Account <span class="text-red-400">*</span></flux:label>
             <flux:select wire:model.live="accountId" placeholder="Select account…">
                 @foreach ($accounts as $account)
                     <flux:select.option value="{{ $account->id }}">
@@ -27,7 +27,7 @@
         </flux:field>
 
         <flux:field>
-            <flux:label>Metal Type <flux:required /></flux:label>
+            <flux:label>Metal Type <span class="text-red-400">*</span></flux:label>
             <flux:select wire:model="metalType" placeholder="Select metal…">
                 @foreach ($metalTypes as $metal)
                     <flux:select.option value="{{ $metal->value }}">{{ ucfirst($metal->value) }}</flux:select.option>
@@ -37,7 +37,7 @@
         </flux:field>
 
         <flux:field>
-            <flux:label>Storage Type <flux:required /></flux:label>
+            <flux:label>Storage Type <span class="text-red-400">*</span></flux:label>
             <flux:select wire:model.live="storageType" placeholder="Select storage…">
                 <flux:select.option value="unallocated">Unallocated</flux:select.option>
                 @unless ($isRetail)
@@ -48,7 +48,7 @@
         </flux:field>
 
         <flux:field>
-            <flux:label>Total Quantity (kg) <flux:required /></flux:label>
+            <flux:label>Total Quantity (kg) <span class="text-red-400">*</span></flux:label>
             <flux:input type="number" step="0.000001" min="0.000001" wire:model="quantityKg" />
             <flux:error name="quantityKg" />
         </flux:field>

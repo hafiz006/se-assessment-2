@@ -51,7 +51,7 @@
 
                 <div class="border-t dark:border-zinc-700 pt-3">
                     <flux:field>
-                        <flux:label>Rejection Reason <flux:required /></flux:label>
+                        <flux:label>Rejection Reason <span class="ms-0.5 text-red-400 dark:text-red-600">*</span></flux:label>
                         <flux:textarea wire:model="notes" rows="2" placeholder="Enter reason for rejection…" />
                         <flux:error name="notes" />
                     </flux:field>

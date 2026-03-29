@@ -13,7 +13,7 @@
 
     <form wire:submit="save" class="space-y-5">
         <flux:field>
-            <flux:label>Deposit <flux:required /></flux:label>
+            <flux:label>Deposit <span class="ms-0.5 text-red-400 dark:text-red-600">*</span></flux:label>
             <flux:select wire:model.live="depositId" placeholder="Select a deposit…">
                 @foreach ($deposits as $dep)
                     <flux:select.option value="{{ $dep->id }}">
@@ -27,14 +27,14 @@
         @if ($selectedDeposit)
             @if ($selectedDeposit->storage_type->value === 'unallocated')
                 <flux:field>
-                    <flux:label>Quantity (kg) <flux:required /></flux:label>
+                    <flux:label>Quantity (kg) <span class="ms-0.5 text-red-400 dark:text-red-600">*</span></flux:label>
                     <flux:input type="number" step="0.000001" min="0.000001" wire:model="quantityKg" placeholder="e.g. 1.000000" />
                     <flux:description>Available: {{ number_format($selectedDeposit->availableQuantityKg(), 6) }} kg</flux:description>
                     <flux:error name="quantityKg" />
                 </flux:field>
             @else
                 <div>
-                    <flux:label class="mb-2 block">Select Bars <flux:required /></flux:label>
+                    <flux:label class="mb-2 block">Select Bars <span class="ms-0.5 text-red-400 dark:text-red-600">*</span></flux:label>
                     @foreach ($selectedDeposit->bars()->where('status', 'held')->get() as $bar)
                         <label class="flex items-center gap-3 py-2 border-b dark:border-zinc-700 last:border-0 cursor-pointer">
                             <input type="checkbox" wire:model="selectedBarIds" value="{{ $bar->id }}" class="rounded" />

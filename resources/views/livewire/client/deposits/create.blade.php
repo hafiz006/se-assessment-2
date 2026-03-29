@@ -17,7 +17,7 @@
 
     <form wire:submit="save" class="space-y-5">
         <flux:field>
-            <flux:label>Metal Type <flux:required /></flux:label>
+            <flux:label>Metal Type <span class="ms-0.5 text-red-400 dark:text-red-600">*</span></flux:label>
             <flux:select wire:model="metalType" placeholder="Select metal…">
                 @foreach ($metalTypes as $metal)
                     <flux:select.option value="{{ $metal->value }}">{{ ucfirst($metal->value) }}</flux:select.option>
@@ -27,7 +27,7 @@
         </flux:field>
 
         <flux:field>
-            <flux:label>Storage Type <flux:required /></flux:label>
+            <flux:label>Storage Type <span class="ms-0.5 text-red-400 dark:text-red-600">*</span></flux:label>
             <flux:select wire:model.live="storageType" placeholder="Select storage…">
                 <flux:select.option value="unallocated">Unallocated</flux:select.option>
                 @unless ($isRetail)
@@ -41,7 +41,7 @@
         </flux:field>
 
         <flux:field>
-            <flux:label>Total Quantity (kg) <flux:required /></flux:label>
+            <flux:label>Total Quantity (kg) <span class="ms-0.5 text-red-400 dark:text-red-600">*</span></flux:label>
             <flux:input type="number" step="0.000001" min="0.000001" wire:model="quantityKg" placeholder="e.g. 5.000000" />
             <flux:error name="quantityKg" />
         </flux:field>
@@ -76,7 +76,7 @@
                     </div>
                 @endforeach
                 @php $barTotal = array_sum(array_column($bars, 'weight_kg')); @endphp
-                <flux:text class="text-xs mt-1 @if(abs($barTotal - (float)$quantityKg) < 0.000001 && $quantityKg) text-green-600 @else text-zinc-500 @endif">
+                <flux:text class="text-xs mt-1 {{ abs($barTotal - (float)$quantityKg) < 0.000001 && $quantityKg ? 'text-green-600' : 'text-zinc-500' }}">
                     Bar total: {{ number_format($barTotal, 6) }} kg
                     @if ($quantityKg) / {{ number_format((float)$quantityKg, 6) }} kg required @endif
                 </flux:text>

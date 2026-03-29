@@ -1,3 +1,4 @@
+<div>
 @if (session('status'))
     <flux:callout variant="success" class="mb-4">{{ session('status') }}</flux:callout>
 @endif
@@ -13,25 +14,25 @@
     </div>
 
     <flux:table>
-        <flux:columns>
-            <flux:column>Number</flux:column>
-            <flux:column>Metal</flux:column>
-            <flux:column>Type</flux:column>
-            <flux:column>Quantity (kg)</flux:column>
-            <flux:column>Status</flux:column>
-            <flux:column>Est. Value</flux:column>
-            <flux:column>Date</flux:column>
-            <flux:column></flux:column>
-        </flux:columns>
-        <flux:rows>
+        <flux:table.columns>
+            <flux:table.column>Number</flux:table.column>
+            <flux:table.column>Metal</flux:table.column>
+            <flux:table.column>Type</flux:table.column>
+            <flux:table.column>Quantity (kg)</flux:table.column>
+            <flux:table.column>Status</flux:table.column>
+            <flux:table.column>Est. Value</flux:table.column>
+            <flux:table.column>Date</flux:table.column>
+            <flux:table.column></flux:table.column>
+        </flux:table.columns>
+        <flux:table.rows>
             @forelse ($deposits as $deposit)
-                <flux:row :key="$deposit->id">
-                    <flux:cell class="font-mono text-sm">{{ $deposit->deposit_number }}</flux:cell>
-                    <flux:cell>{{ ucfirst($deposit->metal_type->value) }}</flux:cell>
-                    <flux:cell>{{ ucfirst($deposit->storage_type->value) }}</flux:cell>
-                    <flux:cell>{{ number_format($deposit->quantity_kg, 6) }}</flux:cell>
-                    <flux:cell><x-deposit-status-badge :status="$deposit->status" /></flux:cell>
-                    <flux:cell>
+                <flux:table.row :key="$deposit->id">
+                    <flux:table.cell class="font-mono text-sm">{{ $deposit->deposit_number }}</flux:table.cell>
+                    <flux:table.cell>{{ ucfirst($deposit->metal_type->value) }}</flux:table.cell>
+                    <flux:table.cell>{{ ucfirst($deposit->storage_type->value) }}</flux:table.cell>
+                    <flux:table.cell>{{ number_format($deposit->quantity_kg, 6) }}</flux:table.cell>
+                    <flux:table.cell><x-deposit-status-badge :status="$deposit->status" /></flux:table.cell>
+                    <flux:table.cell>
                         @php
                             try {
                                 echo '$' . number_format($valuation->valueDeposit($deposit), 2);
@@ -39,21 +40,22 @@
                                 echo '<span class="text-zinc-400 text-xs">N/A</span>';
                             }
                         @endphp
-                    </flux:cell>
-                    <flux:cell class="text-zinc-500 text-xs">{{ $deposit->created_at->format('d M Y') }}</flux:cell>
-                    <flux:cell>
+                    </flux:table.cell>
+                    <flux:table.cell class="text-zinc-500 text-xs">{{ $deposit->created_at->format('d M Y') }}</flux:table.cell>
+                    <flux:table.cell>
                         <flux:button size="xs" href="{{ route('deposits.show', $deposit) }}" wire:navigate>View</flux:button>
-                    </flux:cell>
-                </flux:row>
+                    </flux:table.cell>
+                </flux:table.row>
             @empty
-                <flux:row>
-                    <flux:cell colspan="8" class="text-center text-zinc-500 py-8">No deposits found.</flux:cell>
-                </flux:row>
+                <flux:table.row>
+                    <flux:table.cell colspan="8" class="text-center text-zinc-500 py-8">No deposits found.</flux:table.cell>
+                </flux:table.row>
             @endforelse
-        </flux:rows>
+        </flux:table.rows>
     </flux:table>
 
     <div class="mt-4">
         {{ $deposits->links() }}
     </div>
 </flux:card>
+</div>

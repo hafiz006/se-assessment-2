@@ -1,3 +1,4 @@
+<div>
 @if (session('status'))
     <flux:callout variant="success" class="mb-4">{{ session('status') }}</flux:callout>
 @endif
@@ -9,28 +10,29 @@
 
 <flux:card>
     <flux:table>
-        <flux:columns>
-            <flux:column>Number</flux:column>
-            <flux:column>Deposit</flux:column>
-            <flux:column>Quantity (kg)</flux:column>
-            <flux:column>Status</flux:column>
-            <flux:column>Submitted</flux:column>
-        </flux:columns>
-        <flux:rows>
+        <flux:table.columns>
+            <flux:table.column>Number</flux:table.column>
+            <flux:table.column>Deposit</flux:table.column>
+            <flux:table.column>Quantity (kg)</flux:table.column>
+            <flux:table.column>Status</flux:table.column>
+            <flux:table.column>Submitted</flux:table.column>
+        </flux:table.columns>
+        <flux:table.rows>
             @forelse ($withdrawals as $w)
-                <flux:row :key="$w->id">
-                    <flux:cell class="font-mono text-sm">{{ $w->withdrawal_number }}</flux:cell>
-                    <flux:cell class="text-sm">{{ $w->deposit->deposit_number }}</flux:cell>
-                    <flux:cell>{{ $w->quantity_kg ? number_format($w->quantity_kg, 6) : 'Bars' }}</flux:cell>
-                    <flux:cell><x-withdrawal-status-badge :status="$w->status" /></flux:cell>
-                    <flux:cell class="text-xs text-zinc-500">{{ $w->created_at->format('d M Y') }}</flux:cell>
-                </flux:row>
+                <flux:table.row :key="$w->id">
+                    <flux:table.cell class="font-mono text-sm">{{ $w->withdrawal_number }}</flux:table.cell>
+                    <flux:table.cell class="text-sm">{{ $w->deposit->deposit_number }}</flux:table.cell>
+                    <flux:table.cell>{{ $w->quantity_kg ? number_format($w->quantity_kg, 6) : 'Bars' }}</flux:table.cell>
+                    <flux:table.cell><x-withdrawal-status-badge :status="$w->status" /></flux:table.cell>
+                    <flux:table.cell class="text-xs text-zinc-500">{{ $w->created_at->format('d M Y') }}</flux:table.cell>
+                </flux:table.row>
             @empty
-                <flux:row>
-                    <flux:cell colspan="5" class="text-center py-8 text-zinc-500">No withdrawal requests yet.</flux:cell>
-                </flux:row>
+                <flux:table.row>
+                    <flux:table.cell colspan="5" class="text-center py-8 text-zinc-500">No withdrawal requests yet.</flux:table.cell>
+                </flux:table.row>
             @endforelse
-        </flux:rows>
+        </flux:table.rows>
     </flux:table>
     <div class="mt-4">{{ $withdrawals->links() }}</div>
 </flux:card>
+</div>

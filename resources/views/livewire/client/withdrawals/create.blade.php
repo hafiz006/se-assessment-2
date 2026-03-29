@@ -1,3 +1,4 @@
+<div>
 <div class="mb-6 flex items-center gap-2">
     <flux:button href="{{ route('withdrawals.index') }}" icon="arrow-left" size="sm" variant="ghost" wire:navigate />
     <flux:heading size="xl">Request Withdrawal</flux:heading>
@@ -15,9 +16,9 @@
             <flux:label>Deposit <flux:required /></flux:label>
             <flux:select wire:model.live="depositId" placeholder="Select a deposit…">
                 @foreach ($deposits as $dep)
-                    <flux:option value="{{ $dep->id }}">
+                    <flux:select.option value="{{ $dep->id }}">
                         {{ $dep->deposit_number }} — {{ ucfirst($dep->metal_type->value) }} ({{ ucfirst($dep->storage_type->value) }})
-                    </flux:option>
+                    </flux:select.option>
                 @endforeach
             </flux:select>
             <flux:error name="depositId" />
@@ -57,3 +58,4 @@
         </div>
     </form>
 </flux:card>
+</div>

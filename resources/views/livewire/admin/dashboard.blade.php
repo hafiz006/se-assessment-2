@@ -1,3 +1,4 @@
+<div>
 <flux:heading size="xl" class="mb-6">Admin Dashboard</flux:heading>
 
 {{-- Stats row --}}
@@ -23,22 +24,22 @@
         <p class="font-bold text-lg">${{ number_format($totalAuc, 2) }}</p>
     </div>
     <flux:table>
-        <flux:columns>
-            <flux:column>Metal</flux:column>
-            <flux:column>Quantity (kg)</flux:column>
-            <flux:column>Spot Price ($/kg)</flux:column>
-            <flux:column>Value (USD)</flux:column>
-        </flux:columns>
-        <flux:rows>
+        <flux:table.columns>
+            <flux:table.column>Metal</flux:table.column>
+            <flux:table.column>Quantity (kg)</flux:table.column>
+            <flux:table.column>Spot Price ($/kg)</flux:table.column>
+            <flux:table.column>Value (USD)</flux:table.column>
+        </flux:table.columns>
+        <flux:table.rows>
             @foreach ($metalSummary as $metal => $data)
-                <flux:row>
-                    <flux:cell class="font-semibold capitalize">{{ $metal }}</flux:cell>
-                    <flux:cell>{{ number_format((float) $data['quantity_kg'], 6) }}</flux:cell>
-                    <flux:cell>{{ $data['price_per_kg'] ? '$' . number_format($data['price_per_kg'], 2) : '—' }}</flux:cell>
-                    <flux:cell>${{ number_format($data['value_usd'], 2) }}</flux:cell>
-                </flux:row>
+                <flux:table.row>
+                    <flux:table.cell class="font-semibold capitalize">{{ $metal }}</flux:table.cell>
+                    <flux:table.cell>{{ number_format((float) $data['quantity_kg'], 6) }}</flux:table.cell>
+                    <flux:table.cell>{{ $data['price_per_kg'] ? '$' . number_format($data['price_per_kg'], 2) : '—' }}</flux:table.cell>
+                    <flux:table.cell>${{ number_format($data['value_usd'], 2) }}</flux:table.cell>
+                </flux:table.row>
             @endforeach
-        </flux:rows>
+        </flux:table.rows>
     </flux:table>
 </flux:card>
 
@@ -48,4 +49,5 @@
     <flux:button href="{{ route('admin.deposits.index') }}" variant="outline" wire:navigate class="h-16">Deposits</flux:button>
     <flux:button href="{{ route('admin.withdrawals.index') }}" variant="outline" wire:navigate class="h-16">Withdrawals</flux:button>
     <flux:button href="{{ route('admin.prices.index') }}" variant="outline" wire:navigate class="h-16">Metal Prices</flux:button>
+</div>
 </div>

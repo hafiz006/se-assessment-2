@@ -1,9 +1,10 @@
+<div>
 @if (session('error'))
     <flux:callout variant="danger" class="mb-4">{{ session('error') }}</flux:callout>
 @endif
 
 @if (! $account)
-    <flux:callout variant="warning">Your account is not yet set up. Please contact support.</flux:callout>
+    <flux:callout variant="danger">Your account is not yet set up. Please contact support.</flux:callout>
 @else
     <div class="mb-6 flex items-center justify-between">
         <div>
@@ -70,3 +71,4 @@
         </flux:card>
     </div>
 @endif
+</div>

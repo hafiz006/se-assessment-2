@@ -1,3 +1,4 @@
+<div>
 <div class="mb-6 flex items-center gap-2">
     <flux:button href="{{ route('admin.accounts.index') }}" icon="arrow-left" size="sm" variant="ghost" wire:navigate />
     <flux:heading size="xl">{{ $account->account_number }}</flux:heading>
@@ -28,7 +29,7 @@
                 <flux:button wire:click="activate" variant="primary" class="w-full" wire:confirm="Re-activate this account?">Activate</flux:button>
             @endif
             @if ($account->status->value === 'active')
-                <flux:button wire:click="suspend" variant="warning" class="w-full" wire:confirm="Suspend this account?">Suspend</flux:button>
+                <flux:button wire:click="suspend" variant="danger" class="w-full" wire:confirm="Suspend this account?">Suspend</flux:button>
             @endif
             @if ($account->status->value !== 'closed')
                 <flux:button wire:click="close" variant="danger" class="w-full" wire:confirm="Permanently close this account?">Close Account</flux:button>
@@ -41,23 +42,23 @@
 <flux:card class="mb-6">
     <flux:heading class="mb-3">Portfolio Breakdown</flux:heading>
     <flux:table>
-        <flux:columns>
-            <flux:column>Metal</flux:column>
-            <flux:column>Quantity (kg)</flux:column>
-            <flux:column>Spot Price</flux:column>
-            <flux:column>Value (USD)</flux:column>
-        </flux:columns>
-        <flux:rows>
+        <flux:table.columns>
+            <flux:table.column>Metal</flux:table.column>
+            <flux:table.column>Quantity (kg)</flux:table.column>
+            <flux:table.column>Spot Price</flux:table.column>
+            <flux:table.column>Value (USD)</flux:table.column>
+        </flux:table.columns>
+        <flux:table.rows>
             @foreach (\App\Enums\MetalType::cases() as $metal)
                 @php $m = $portfolio[$metal->value]; @endphp
-                <flux:row>
-                    <flux:cell class="capitalize font-medium">{{ $metal->value }}</flux:cell>
-                    <flux:cell>{{ number_format($m['quantity_kg'], 6) }}</flux:cell>
-                    <flux:cell>{{ $m['price_per_kg'] ? '$' . number_format($m['price_per_kg'], 2) : '—' }}</flux:cell>
-                    <flux:cell>${{ number_format($m['value_usd'], 2) }}</flux:cell>
-                </flux:row>
+                <flux:table.row>
+                    <flux:table.cell class="capitalize font-medium">{{ $metal->value }}</flux:table.cell>
+                    <flux:table.cell>{{ number_format($m['quantity_kg'], 6) }}</flux:table.cell>
+                    <flux:table.cell>{{ $m['price_per_kg'] ? '$' . number_format($m['price_per_kg'], 2) : '—' }}</flux:table.cell>
+                    <flux:table.cell>${{ number_format($m['value_usd'], 2) }}</flux:table.cell>
+                </flux:table.row>
             @endforeach
-        </flux:rows>
+        </flux:table.rows>
     </flux:table>
 </flux:card>
 
@@ -65,30 +66,30 @@
 <flux:card class="mb-6">
     <flux:heading class="mb-3">Deposits</flux:heading>
     <flux:table>
-        <flux:columns>
-            <flux:column>Number</flux:column>
-            <flux:column>Metal</flux:column>
-            <flux:column>Storage</flux:column>
-            <flux:column>Quantity</flux:column>
-            <flux:column>Status</flux:column>
-            <flux:column></flux:column>
-        </flux:columns>
-        <flux:rows>
+        <flux:table.columns>
+            <flux:table.column>Number</flux:table.column>
+            <flux:table.column>Metal</flux:table.column>
+            <flux:table.column>Storage</flux:table.column>
+            <flux:table.column>Quantity</flux:table.column>
+            <flux:table.column>Status</flux:table.column>
+            <flux:table.column></flux:table.column>
+        </flux:table.columns>
+        <flux:table.rows>
             @forelse ($deposits as $dep)
-                <flux:row :key="$dep->id">
-                    <flux:cell class="font-mono text-sm">{{ $dep->deposit_number }}</flux:cell>
-                    <flux:cell class="capitalize">{{ $dep->metal_type->value }}</flux:cell>
-                    <flux:cell class="capitalize">{{ $dep->storage_type->value }}</flux:cell>
-                    <flux:cell>{{ number_format($dep->quantity_kg, 6) }}</flux:cell>
-                    <flux:cell><x-deposit-status-badge :status="$dep->status" /></flux:cell>
-                    <flux:cell>
+                <flux:table.row :key="$dep->id">
+                    <flux:table.cell class="font-mono text-sm">{{ $dep->deposit_number }}</flux:table.cell>
+                    <flux:table.cell class="capitalize">{{ $dep->metal_type->value }}</flux:table.cell>
+                    <flux:table.cell class="capitalize">{{ $dep->storage_type->value }}</flux:table.cell>
+                    <flux:table.cell>{{ number_format($dep->quantity_kg, 6) }}</flux:table.cell>
+                    <flux:table.cell><x-deposit-status-badge :status="$dep->status" /></flux:table.cell>
+                    <flux:table.cell>
                         <flux:button size="xs" href="{{ route('admin.deposits.show', $dep) }}" wire:navigate>View</flux:button>
-                    </flux:cell>
-                </flux:row>
+                    </flux:table.cell>
+                </flux:table.row>
             @empty
-                <flux:row><flux:cell colspan="6" class="py-4 text-center text-zinc-500">No deposits.</flux:cell></flux:row>
+                <flux:table.row><flux:table.cell colspan="6" class="py-4 text-center text-zinc-500">No deposits.</flux:table.cell></flux:table.row>
             @endforelse
-        </flux:rows>
+        </flux:table.rows>
     </flux:table>
     <div class="mt-3">{{ $deposits->links() }}</div>
 </flux:card>
@@ -97,24 +98,25 @@
 <flux:card>
     <flux:heading class="mb-3">Withdrawals</flux:heading>
     <flux:table>
-        <flux:columns>
-            <flux:column>Number</flux:column>
-            <flux:column>Deposit</flux:column>
-            <flux:column>Status</flux:column>
-            <flux:column>Date</flux:column>
-        </flux:columns>
-        <flux:rows>
+        <flux:table.columns>
+            <flux:table.column>Number</flux:table.column>
+            <flux:table.column>Deposit</flux:table.column>
+            <flux:table.column>Status</flux:table.column>
+            <flux:table.column>Date</flux:table.column>
+        </flux:table.columns>
+        <flux:table.rows>
             @forelse ($withdrawals as $w)
-                <flux:row :key="$w->id">
-                    <flux:cell class="font-mono text-sm">{{ $w->withdrawal_number }}</flux:cell>
-                    <flux:cell class="font-mono text-sm">{{ $w->deposit->deposit_number }}</flux:cell>
-                    <flux:cell><x-withdrawal-status-badge :status="$w->status" /></flux:cell>
-                    <flux:cell class="text-xs text-zinc-500">{{ $w->created_at->format('d M Y') }}</flux:cell>
-                </flux:row>
+                <flux:table.row :key="$w->id">
+                    <flux:table.cell class="font-mono text-sm">{{ $w->withdrawal_number }}</flux:table.cell>
+                    <flux:table.cell class="font-mono text-sm">{{ $w->deposit->deposit_number }}</flux:table.cell>
+                    <flux:table.cell><x-withdrawal-status-badge :status="$w->status" /></flux:table.cell>
+                    <flux:table.cell class="text-xs text-zinc-500">{{ $w->created_at->format('d M Y') }}</flux:table.cell>
+                </flux:table.row>
             @empty
-                <flux:row><flux:cell colspan="4" class="py-4 text-center text-zinc-500">No withdrawals.</flux:cell></flux:row>
+                <flux:table.row><flux:table.cell colspan="4" class="py-4 text-center text-zinc-500">No withdrawals.</flux:table.cell></flux:table.row>
             @endforelse
-        </flux:rows>
+        </flux:table.rows>
     </flux:table>
     <div class="mt-3">{{ $withdrawals->links() }}</div>
 </flux:card>
+</div>

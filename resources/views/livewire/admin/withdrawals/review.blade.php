@@ -1,3 +1,4 @@
+<div>
 <div class="mb-6 flex items-center gap-2">
     <flux:button href="{{ route('admin.withdrawals.index') }}" icon="arrow-left" size="sm" variant="ghost" wire:navigate />
     <flux:heading size="xl">Review Withdrawal</flux:heading>
@@ -71,4 +72,5 @@
             </dl>
         </flux:card>
     @endif
+</div>
 </div>

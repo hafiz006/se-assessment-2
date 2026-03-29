@@ -1,3 +1,4 @@
+<div>
 <div class="mb-6 flex items-center gap-2">
     <flux:button href="{{ route('deposits.index') }}" icon="arrow-left" size="sm" variant="ghost" wire:navigate />
     <flux:heading size="xl">{{ $deposit->deposit_number }}</flux:heading>
@@ -52,26 +53,26 @@
     <flux:card class="mt-6">
         <flux:heading class="mb-4">Bars ({{ $bars->count() }})</flux:heading>
         <flux:table>
-            <flux:columns>
-                <flux:column>Serial Number</flux:column>
-                <flux:column>Weight (kg)</flux:column>
-                <flux:column>Status</flux:column>
-            </flux:columns>
-            <flux:rows>
+            <flux:table.columns>
+                <flux:table.column>Serial Number</flux:table.column>
+                <flux:table.column>Weight (kg)</flux:table.column>
+                <flux:table.column>Status</flux:table.column>
+            </flux:table.columns>
+            <flux:table.rows>
                 @forelse ($bars as $bar)
-                    <flux:row :key="$bar->id">
-                        <flux:cell class="font-mono text-sm">{{ $bar->serial_number }}</flux:cell>
-                        <flux:cell>{{ number_format($bar->weight_kg, 6) }}</flux:cell>
-                        <flux:cell>
+                    <flux:table.row :key="$bar->id">
+                        <flux:table.cell class="font-mono text-sm">{{ $bar->serial_number }}</flux:table.cell>
+                        <flux:table.cell>{{ number_format($bar->weight_kg, 6) }}</flux:table.cell>
+                        <flux:table.cell>
                             <span @class(['text-xs font-semibold', 'text-green-600' => $bar->status->value === 'held', 'text-zinc-400' => $bar->status->value === 'withdrawn'])>
                                 {{ ucfirst($bar->status->value) }}
                             </span>
-                        </flux:cell>
-                    </flux:row>
+                        </flux:table.cell>
+                    </flux:table.row>
                 @empty
-                    <flux:row><flux:cell colspan="3" class="text-center py-4 text-zinc-500">No bars.</flux:cell></flux:row>
+                    <flux:table.row><flux:table.cell colspan="3" class="text-center py-4 text-zinc-500">No bars.</flux:table.cell></flux:table.row>
                 @endforelse
-            </flux:rows>
+            </flux:table.rows>
         </flux:table>
     </flux:card>
 @endif
@@ -80,25 +81,26 @@
 <flux:card class="mt-6">
     <flux:heading class="mb-4">Withdrawal History</flux:heading>
     <flux:table>
-        <flux:columns>
-            <flux:column>Number</flux:column>
-            <flux:column>Quantity (kg)</flux:column>
-            <flux:column>Status</flux:column>
-            <flux:column>Processed By</flux:column>
-            <flux:column>Date</flux:column>
-        </flux:columns>
-        <flux:rows>
+        <flux:table.columns>
+            <flux:table.column>Number</flux:table.column>
+            <flux:table.column>Quantity (kg)</flux:table.column>
+            <flux:table.column>Status</flux:table.column>
+            <flux:table.column>Processed By</flux:table.column>
+            <flux:table.column>Date</flux:table.column>
+        </flux:table.columns>
+        <flux:table.rows>
             @forelse ($withdrawals as $w)
-                <flux:row :key="$w->id">
-                    <flux:cell class="font-mono text-sm">{{ $w->withdrawal_number }}</flux:cell>
-                    <flux:cell>{{ $w->quantity_kg ? number_format($w->quantity_kg, 6) : '—' }}</flux:cell>
-                    <flux:cell><x-withdrawal-status-badge :status="$w->status" /></flux:cell>
-                    <flux:cell>{{ $w->processedBy?->name ?? '—' }}</flux:cell>
-                    <flux:cell class="text-xs text-zinc-500">{{ $w->created_at->format('d M Y') }}</flux:cell>
-                </flux:row>
+                <flux:table.row :key="$w->id">
+                    <flux:table.cell class="font-mono text-sm">{{ $w->withdrawal_number }}</flux:table.cell>
+                    <flux:table.cell>{{ $w->quantity_kg ? number_format($w->quantity_kg, 6) : '—' }}</flux:table.cell>
+                    <flux:table.cell><x-withdrawal-status-badge :status="$w->status" /></flux:table.cell>
+                    <flux:table.cell>{{ $w->processedBy?->name ?? '—' }}</flux:table.cell>
+                    <flux:table.cell class="text-xs text-zinc-500">{{ $w->created_at->format('d M Y') }}</flux:table.cell>
+                </flux:table.row>
             @empty
-                <flux:row><flux:cell colspan="5" class="text-center py-4 text-zinc-500">No withdrawals.</flux:cell></flux:row>
+                <flux:table.row><flux:table.cell colspan="5" class="text-center py-4 text-zinc-500">No withdrawals.</flux:table.cell></flux:table.row>
             @endforelse
-        </flux:rows>
+        </flux:table.rows>
     </flux:table>
 </flux:card>
+</div>

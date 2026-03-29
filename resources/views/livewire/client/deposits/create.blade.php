@@ -1,3 +1,4 @@
+<div>
 <div class="mb-6 flex items-center gap-2">
     <flux:button href="{{ route('deposits.index') }}" icon="arrow-left" size="sm" variant="ghost" wire:navigate />
     <flux:heading size="xl">New Deposit</flux:heading>
@@ -19,7 +20,7 @@
             <flux:label>Metal Type <flux:required /></flux:label>
             <flux:select wire:model="metalType" placeholder="Select metal…">
                 @foreach ($metalTypes as $metal)
-                    <flux:option value="{{ $metal->value }}">{{ ucfirst($metal->value) }}</flux:option>
+                    <flux:select.option value="{{ $metal->value }}">{{ ucfirst($metal->value) }}</flux:select.option>
                 @endforeach
             </flux:select>
             <flux:error name="metalType" />
@@ -28,9 +29,9 @@
         <flux:field>
             <flux:label>Storage Type <flux:required /></flux:label>
             <flux:select wire:model.live="storageType" placeholder="Select storage…">
-                <flux:option value="unallocated">Unallocated</flux:option>
+                <flux:select.option value="unallocated">Unallocated</flux:select.option>
                 @unless ($isRetail)
-                    <flux:option value="allocated">Allocated</flux:option>
+                    <flux:select.option value="allocated">Allocated</flux:select.option>
                 @endunless
             </flux:select>
             <flux:error name="storageType" />
@@ -88,3 +89,4 @@
         </div>
     </form>
 </flux:card>
+</div>

@@ -1,3 +1,4 @@
+<div>
 <flux:heading size="xl" class="mb-6">Metal Spot Prices</flux:heading>
 
 @if (session('status'))
@@ -40,21 +41,22 @@
 <flux:card>
     <flux:heading class="mb-4">Recent Price History</flux:heading>
     <flux:table>
-        <flux:columns>
-            <flux:column>Metal</flux:column>
-            <flux:column>Price ($/kg)</flux:column>
-            <flux:column>Effective Date</flux:column>
-        </flux:columns>
-        <flux:rows>
+        <flux:table.columns>
+            <flux:table.column>Metal</flux:table.column>
+            <flux:table.column>Price ($/kg)</flux:table.column>
+            <flux:table.column>Effective Date</flux:table.column>
+        </flux:table.columns>
+        <flux:table.rows>
             @forelse ($recentPrices as $price)
-                <flux:row :key="$price->id">
-                    <flux:cell class="capitalize">{{ $price->metal_type->value }}</flux:cell>
-                    <flux:cell>${{ number_format($price->price_per_kg, 4) }}</flux:cell>
-                    <flux:cell>{{ $price->effective_date->format('d M Y') }}</flux:cell>
-                </flux:row>
+                <flux:table.row :key="$price->id">
+                    <flux:table.cell class="capitalize">{{ $price->metal_type->value }}</flux:table.cell>
+                    <flux:table.cell>${{ number_format($price->price_per_kg, 4) }}</flux:table.cell>
+                    <flux:table.cell>{{ $price->effective_date->format('d M Y') }}</flux:table.cell>
+                </flux:table.row>
             @empty
-                <flux:row><flux:cell colspan="3" class="text-center py-4 text-zinc-500">No price history.</flux:cell></flux:row>
+                <flux:table.row><flux:table.cell colspan="3" class="text-center py-4 text-zinc-500">No price history.</flux:table.cell></flux:table.row>
             @endforelse
-        </flux:rows>
+        </flux:table.rows>
     </flux:table>
 </flux:card>
+</div>
